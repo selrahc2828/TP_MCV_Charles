@@ -30,9 +30,6 @@ if (isset($_GET['action'])){
 	$requestedPage = "accueil";
 }
 switch ($requestedPage) {
-    /*case '':
-    	require_once(__DIR__ . '/Controller/usersController.php');
-    	break;*/
 
     case 'accueil':
     	require_once(__DIR__ . '/Controller/ShowPostsController.php');
@@ -103,6 +100,24 @@ switch ($requestedPage) {
                 header('location: index.php?action=newUserForm&mdp=1');
             }
         }
+        break;
+
+    case'supprimerPost':
+        require_once(__DIR__ . '/Controller/supprimerPostController.php');
+        break;
+
+    case'modifierPostform':
+        require_once(__DIR__ . '/Controller/form_modifierPost.php');
+        break;
+
+    case'modifierPost':
+        if(isset($_POST['titre'])&&isset($_POST['categorie'])&&isset($_POST['contenu'])) {
+            require_once(__DIR__ . '/Controller/modifierPostController.php');
+        }else {
+            echo "Remplir Les champs essentiels (titre et contenu).";
+        }
+        
+        break;
 
     default:
         require_once(__DIR__ . '/View/404.php');

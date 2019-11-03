@@ -80,3 +80,35 @@ function getCommentaires($id_post) {
 
     return $query->fetchAll();
 }
+
+function getMesPosts($id_user) {
+    $db = connect();
+
+    $query = $db->prepare('SELECT * FROM posts INNER JOIN categories ON posts.idCategory = categories.id_cat WHERE idUser = :idUser');
+    $query->bindParam(":idUser", $id_user);
+    $query->execute();
+    
+    return $query->fetchAll();
+}
+
+function supprimerPost($id_post) {
+    $db = connect();
+
+    $query = $db->prepare('DELETE * FROM posts WHERE id_post = :id_post');
+    $query->bindParam(":id_post", $id_post);
+    $query->execute();
+
+}
+
+function modifierPost($id_post, $image, $titre, $contenu, $id_categorie) {
+    $db = connect();
+
+    $query = $db->prepare('UPDATE posts SET imagePath = :image, title = :titre, content = :contenu, idCategory = :id_categorie WHERE id_post = :id_post');
+    $query->bindParam("image", $image);
+    $query->bindParam("titre", $titre);
+    $query->bindParam("contenu", $contenu);
+    $query->bindParam("id_categorie", $id_categorie);
+    $query->bindParam("id_post", $id_post);
+    $query->execute();
+
+}
