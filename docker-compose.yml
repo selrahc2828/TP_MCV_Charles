@@ -1,0 +1,27 @@
+version: "3.6"
+services:
+    conect_web:
+      build: .
+      volumes:
+        - .:/var/www/html
+      ports:
+        - 1213:80
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: pma_mvc_DM
+      environment:
+        - PMA_HOST=mariadb
+      ports:
+        - 1212:80
+      depends_on:
+        - mariadb
+
+    mariadb:
+      image: mariadb
+      container_name: maria_mvc_DM
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=Projet_mvc_db
+      volumes:
+        - ./export:/docker-entrypoint-initdb.d
